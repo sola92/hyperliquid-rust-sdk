@@ -361,7 +361,7 @@ impl ExchangeClient {
         self.order(order, Some(wallet)).await
     }
 
-    async fn calculate_slippage_price(
+    pub async fn calculate_slippage_price(
         &self,
         asset: &str,
         is_buy: bool,
@@ -807,12 +807,12 @@ impl ExchangeClient {
     }
 }
 
-fn round_to_decimals(value: f64, decimals: u32) -> f64 {
+pub fn round_to_decimals(value: f64, decimals: u32) -> f64 {
     let factor = 10f64.powi(decimals as i32);
     (value * factor).round() / factor
 }
 
-fn round_to_significant_and_decimal(value: f64, sig_figs: u32, max_decimals: u32) -> f64 {
+pub fn round_to_significant_and_decimal(value: f64, sig_figs: u32, max_decimals: u32) -> f64 {
     let abs_value = value.abs();
     let magnitude = abs_value.log10().floor() as i32;
     let scale = 10f64.powi(sig_figs as i32 - magnitude - 1);
